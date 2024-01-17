@@ -7,11 +7,16 @@ import (
 
 //主线程
 func main() {
-	//匿名函数
+	
 	for i:=1;i<10;i++{
-		go func(){
+		//传n每一次运行是一个新的副本
+		go func(n int){
+			//i是一个多协程共享数据
+			fmt.Println(n)
+			//匿名函数+外部变量=闭包
+			//闭包
 			fmt.Println(i)
-		}()
+		}(i)
 	}
 	
 	time.Sleep(time.Second*2)
