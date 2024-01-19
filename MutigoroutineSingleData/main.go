@@ -6,22 +6,26 @@ import(
 )
 var totalNum int
 var wg sync.WaitGroup
-var lock sync.Mutex
+var mu sync.Mutex
 func add(){
 	defer wg.Done()
 	for i:=0;i<10000;i++{
 		//加锁
-		lock.Lock()
+		mu.Lock()
 		totalNum = totalNum+1
 		//解锁
-		lock.Unlock()
+		mu.Unlock()
 	}
 }
 
 func sub(){
 	defer wg.Done()
 	for i:=0;i<10000;i++{
+		//加锁
+		mu.Lock()
 		totalNum = totalNum-1
+		//解锁
+		mu.Lock()
 	}
 
 }
