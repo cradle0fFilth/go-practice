@@ -12,6 +12,8 @@ func main() {
 	for i := 0; i < 100; i++ {
 		intChan <- i
 	}
+	//在遍历前如果没有关闭管道,就会出现deadlock的错误(总结：写完就关，关了不影响读)
+	close(intChan)
 	//遍历channel
 	for v := range intChan {
 		fmt.Println("value=", v)
